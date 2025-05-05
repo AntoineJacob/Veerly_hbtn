@@ -5,7 +5,11 @@ const {
   addGroup, 
   getGroupById, 
   updateGroup, 
-  deleteGroup 
+  deleteGroup,
+  inviteToGroup,
+  getPendingInvitations,
+  acceptInvitation,
+  rejectInvitation
 } = require('../controllers/groupController.cjs');
 const { authenticateToken } = require('../middleware/auth.cjs');
 
@@ -23,5 +27,17 @@ router.put('/update-group/:id', authenticateToken, updateGroup);
 
 // Supprimer un groupe
 router.delete('/delete-group/:id', authenticateToken, deleteGroup);
+
+// Inviter un utilisateur à rejoindre un groupe
+router.post('/invite', authenticateToken, inviteToGroup);
+
+// Obtenir les invitations en attente
+router.get('/invitations', authenticateToken, getPendingInvitations);
+
+// Accepter une invitation
+router.put('/accept-invitation/:id', authenticateToken, acceptInvitation);
+
+// Refuser une invitation
+router.put('/reject-invitation/:id', authenticateToken, rejectInvitation);
 
 module.exports = router;

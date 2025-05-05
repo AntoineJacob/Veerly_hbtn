@@ -23,24 +23,27 @@ const getProfile = (req, res) => {
   );
 };
 
-// Récupérer l'historique des courses de l'utilisateur
+// Récupérer l'historique des courses de l'utilisateur (seulement les terminées)
 const getCourseHistory = (req, res) => {
   const userId = req.user.id;
   
-  // Adapter cette requête selon la structure de votre table courses
+  // Requête qui filtre par l'ID de l'utilisateur connecté et le statut "Terminée"
   const query = `
-    SELECT * 
-    FROM courses 
-    ORDER BY date DESC, schedule ASC
+    SELECT c.*, 
+           g.group_name
+    FROM courses c
+    LEFT JOIN \`groups\` g ON c.group_id = g.id
+    WHERE c.user_id = ? AND c.status = 'Terminée'
+    ORDER BY c.date DESC, c.schedule ASC
   `;
   
-  db.query(query, (err, results) => {
+  db.query(query, [userId], (err, results) => {
     if (err) {
       console.error('Erreur lors de la récupération de l\'historique des courses:', err);
-      return res.status(500).send('Erreur lors de la récupération de l\'historique');
+      return res.status(500).send('Erreur lors de la récupération de l\'historique des courses');
     }
     
-    console.log(`${results.length} courses trouvées`);
+    console.log(`${results.length} courses terminées trouvées pour l'utilisateur ${userId}`);
     res.json(results);
   });
 };

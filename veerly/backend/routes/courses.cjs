@@ -1,15 +1,39 @@
 const express = require('express');
-const router = express.Router();
-const { getCourses, addCourse, deleteCourse } = require('../controllers/courseController.cjs');
 const { authenticateToken } = require('../middleware/auth.cjs');
+const { 
+  getGroupCourses, 
+  getGroupCoursesByStatus,
+  addGroupCourse,
+  deleteGroupCourse,
+  assignCourse,
+  startCourse,
+  completeCourse,
+  unassignCourse,
+  getGroupDrivers,
+  getCourseReceipt,
+  sendReceiptByEmail
+} = require('../controllers/courseController.cjs');
 
-// Obtenir toutes les courses
-router.get('/get-courses', authenticateToken, getCourses);
+const router = express.Router();
 
-// Ajouter une course
-router.post('/add-course', authenticateToken, addCourse);
+// Routes pour les courses par groupe
+router.get('/group/:groupId', authenticateToken, getGroupCourses);
+router.get('/group/:groupId/by-status', authenticateToken, getGroupCoursesByStatus);
+router.post('/group/:groupId', authenticateToken, addGroupCourse);
+router.delete('/group/:groupId/:courseId', authenticateToken, deleteGroupCourse);
 
-// Supprimer une course
-router.delete('/delete-course/:id', authenticateToken, deleteCourse);
+// Routes pour les chauffeurs
+router.get('/group/:groupId/drivers', authenticateToken, getGroupDrivers);
+
+// Routes pour la gestion des courses
+router.post('/:courseId/assign', authenticateToken, assignCourse);
+router.post('/:courseId/start', authenticateToken, startCourse);
+router.post('/:courseId/complete', authenticateToken, completeCourse);
+router.post('/:courseId/unassign', authenticateToken, unassignCourse);
+
+// Route pour récupérer les données du bon de réservation
+router.get('/:courseId/receipt', authenticateToken, getCourseReceipt);
+// Route pour envoyer le bon de réservation par email
+router.post('/:courseId/send-receipt', authenticateToken, sendReceiptByEmail);
 
 module.exports = router;
