@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import '../styles/Navbar.css';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Vérifier si l'utilisateur est connecté
@@ -16,52 +16,77 @@ function Navbar() {
   const handleLogout = () => {
     localStorage.removeItem('token');
     setIsLoggedIn(false);
-    // Si vous avez une fonction de redirection, utilisez-la ici
-  };
-
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
+    navigate('/login');
   };
 
   return (
-    <header className="navbar">
-      <div className="navbar-container">
-        <div className="navbar-logo">
-          <Link to="/">
-            <span className="logo-text">Veerly</span>
-          </Link>
-        </div>
-
-        <button className="menu-toggle" onClick={toggleMenu}>
-          <span className="menu-icon"></span>
+    <header className="bg-gray-800 text-white shadow-md sticky top-0 z-50">
+      <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+        <Link to="/" className="text-2xl font-bold text-white">Veerly</Link>
+        
+        <button 
+          className="md:hidden flex flex-col justify-center items-center w-10 h-10"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Menu"
+        >
+          <span className={`block w-6 h-0.5 bg-white transition-all ${menuOpen ? 'rotate-45 translate-y-1.5' : ''}`}></span>
+          <span className={`block w-6 h-0.5 bg-white my-1 transition-opacity ${menuOpen ? 'opacity-0' : ''}`}></span>
+          <span className={`block w-6 h-0.5 bg-white transition-all ${menuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></span>
         </button>
-
-        <nav className={`navbar-menu ${menuOpen ? 'active' : ''}`}>
-          <ul>
-            <li className={location.pathname === '/courses' ? 'active' : ''}>
-              <Link to="/courses">Courses</Link>
-            </li>
-            <li className={location.pathname === '/groups' ? 'active' : ''}>
-              <Link to="/groups">Groupes</Link>
-            </li>
+        
+        <nav className={`absolute md:relative top-full left-0 w-full md:w-auto bg-gray-800 md:bg-transparent shadow-md md:shadow-none z-40 ${menuOpen ? 'block' : 'hidden md:block'}`}>
+          <ul className="flex flex-col md:flex-row md:space-x-6 p-4 md:p-0">
             {isLoggedIn ? (
               <>
-                <li className={location.pathname === '/profile' ? 'active' : ''}>
-                  <Link to="/profile">Profil</Link>
+                <li>
+                  <Link 
+                    to="/groups" 
+                    className={`block px-3 py-2 rounded-md text-sm font-medium transition-colors ${location.pathname === '/groups' ? 'bg-gray-700' : 'hover:bg-gray-700'} text-white`}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Groupes
+                  </Link>
                 </li>
-                <li className="logout-item">
-                  <button onClick={handleLogout} className="logout-btn">
+                <li>
+                  <Link 
+                    to="/profile" 
+                    className={`block px-3 py-2 rounded-md text-sm font-medium transition-colors ${location.pathname === '/profile' ? 'bg-gray-700' : 'hover:bg-gray-700'} text-white`}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Profil
+                  </Link>
+                </li>
+                <li>
+                  <button 
+                    onClick={() => {
+                      handleLogout();
+                      setMenuOpen(false);
+                    }} 
+                    className="block w-full text-left px-3 py-2 rounded-md text-sm font-medium text-red-300 hover:bg-gray-700 hover:text-red-200 transition-colors"
+                  >
                     Déconnexion
                   </button>
                 </li>
               </>
             ) : (
               <>
-                <li className={location.pathname === '/login' ? 'active' : ''}>
-                  <Link to="/login">Connexion</Link>
+                <li>
+                  <Link 
+                    to="/login" 
+                    className={`block px-3 py-2 rounded-md text-sm font-medium transition-colors ${location.pathname === '/login' ? 'bg-gray-700' : 'hover:bg-gray-700'} text-white`}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Connexion
+                  </Link>
                 </li>
-                <li className={location.pathname === '/register' ? 'active' : ''}>
-                  <Link to="/register" className="register-btn">Inscription</Link>
+                <li>
+                  <Link 
+                    to="/register" 
+                    className="block px-3 py-2 rounded-md text-sm font-medium bg-green-100 text-gray-800 hover:bg-green-200 transition-colors"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Inscription
+                  </Link>
                 </li>
               </>
             )}
