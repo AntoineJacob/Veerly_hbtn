@@ -22,7 +22,7 @@ function Profile() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     if (!token) {
       alert('Vous devez être connecté pour accéder à cette page');
       navigate('/login');
@@ -35,7 +35,7 @@ function Profile() {
 
   const fetchProfileData = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       const response = await axios.get('/api/profile', {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -52,7 +52,7 @@ function Profile() {
 
   const fetchCourseHistory = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       const response = await axios.get('/api/profile/course-history', {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -80,7 +80,7 @@ function Profile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       await axios.put('/api/profile/update', formData, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -104,7 +104,7 @@ function Profile() {
     }
     
     try {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       await axios.put('/api/profile/update-password', {
         currentPassword: passwordData.currentPassword,
         newPassword: passwordData.newPassword
@@ -132,7 +132,7 @@ function Profile() {
   const handleViewReceipt = async (courseId) => {
     try {
       setReceiptLoading(true);
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       const response = await axios.get(`/api/courses/${courseId}/receipt`, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -151,7 +151,7 @@ function Profile() {
     if (!updatedReceipt) return;
     
     try {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       await axios.post(`/api/courses/${updatedReceipt.id}/send-receipt`, {
         price: updatedReceipt.price
       }, {
@@ -436,7 +436,7 @@ function Profile() {
                           className="text-secondary hover:text-secondary-dark font-medium flex items-center justify-end ml-auto"
                         >
                           <svg className="h-5 w-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 01-2-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                           </svg>
                           Bon
                         </button>
@@ -460,7 +460,7 @@ function Profile() {
                       className="flex items-center text-secondary hover:text-secondary-dark"
                     >
                       <svg className="h-5 w-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 01-2-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                       </svg>
                       Bon
                     </button>

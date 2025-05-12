@@ -24,7 +24,7 @@ function Login() {
     
     try {
       const response = await axios.post('/api/auth/login', formData);
-      localStorage.setItem('token', response.data.token);
+      sessionStorage.setItem('token', response.data.token);
       navigate('/courses');
     } catch (error) {
       console.error('Erreur lors de la connexion :', error);

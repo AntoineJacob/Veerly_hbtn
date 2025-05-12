@@ -37,7 +37,7 @@ function CourseCard({ course, onAssign, onStart, onComplete, onDelete, isAdmin, 
           </button>
         )}
         
-        {course.status === 'Prise en charge' && course.user_id === parseInt(localStorage.getItem('userId')) && (
+        {course.status === 'Prise en charge' && course.user_id === parseInt(sessionStorage.getItem('userId')) && (
           <button 
             onClick={() => onStart(course.id)} 
             className="flex-1 bg-secondary text-white py-1.5 px-3 rounded text-sm hover:bg-secondary-dark transition-colors"
@@ -46,7 +46,7 @@ function CourseCard({ course, onAssign, onStart, onComplete, onDelete, isAdmin, 
           </button>
         )}
         
-        {course.status === 'En cours' && course.user_id === parseInt(localStorage.getItem('userId')) && (
+        {course.status === 'En cours' && course.user_id === parseInt(sessionStorage.getItem('userId')) && (
           <button 
             onClick={() => onComplete(course.id)} 
             className="flex-1 bg-warning text-white py-1.5 px-3 rounded text-sm hover:bg-warning-dark transition-colors"
@@ -55,7 +55,7 @@ function CourseCard({ course, onAssign, onStart, onComplete, onDelete, isAdmin, 
           </button>
         )}
         
-        {(isAdmin || (course.status === 'Prise en charge' && course.user_id === parseInt(localStorage.getItem('userId')))) && (
+        {(isAdmin || (course.status === 'Prise en charge' && course.user_id === parseInt(sessionStorage.getItem('userId')))) && (
           <button 
             onClick={() => onDelete(course.id)} 
             className="flex-1 bg-danger text-white py-1.5 px-3 rounded text-sm hover:bg-danger-dark transition-colors"

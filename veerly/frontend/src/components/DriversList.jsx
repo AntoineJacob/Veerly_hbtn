@@ -15,7 +15,7 @@ function DriversList() {
 
   const fetchDrivers = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       const response = await axios.get(`/api/courses/group/${groupId}/drivers`, {
         headers: { Authorization: `Bearer ${token}` }
       });

@@ -22,7 +22,7 @@ function Courses() {
 
   // Vérifier si l'utilisateur est connecté et charger les courses
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     if (!token) {
       alert('Vous devez être connecté pour accéder à cette page');
       navigate('/login');
@@ -36,7 +36,7 @@ function Courses() {
   const fetchCourses = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       
       const response = await axios.get('/api/courses/get-courses', {
         headers: {
@@ -64,7 +64,7 @@ function Courses() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       await axios.post('/api/courses/add-course', formData, {
         headers: {
           Authorization: `Bearer ${token}`
@@ -103,7 +103,7 @@ function Courses() {
     }
     
     try {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       await axios.delete(`/api/courses/delete-course/${courseId}`, {
         headers: {
           Authorization: `Bearer ${token}`

@@ -19,7 +19,7 @@ function Groups() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     if (!token) {
       alert('Vous devez être connecté pour accéder à cette page');
       navigate('/login');
@@ -33,7 +33,7 @@ function Groups() {
   const fetchGroups = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       
       const response = await axios.get('/api/groups/get-groups', {
         headers: { Authorization: `Bearer ${token}` }
@@ -49,7 +49,7 @@ function Groups() {
 
   const fetchInvitations = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       
       const response = await axios.get('/api/groups/invitations', {
         headers: { Authorization: `Bearer ${token}` }
@@ -72,7 +72,7 @@ function Groups() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       
       await axios.post('/api/groups/add-group', formData, {
         headers: { Authorization: `Bearer ${token}` }
@@ -101,7 +101,7 @@ function Groups() {
     }
     
     try {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       await axios.delete(`/api/groups/delete-group/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -130,7 +130,7 @@ function Groups() {
   const handleInviteSubmit = async (e) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       await axios.post(`/api/groups/invite`, {
         groupId: inviteData.groupId,
         email: inviteData.email
@@ -153,7 +153,7 @@ function Groups() {
 
   const handleAcceptInvitation = async (invitationId) => {
     try {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       await axios.put(`/api/groups/accept-invitation/${invitationId}`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -173,7 +173,7 @@ function Groups() {
 
   const handleRejectInvitation = async (invitationId) => {
     try {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       await axios.put(`/api/groups/reject-invitation/${invitationId}`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });

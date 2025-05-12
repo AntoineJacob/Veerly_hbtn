@@ -9,12 +9,12 @@ function Navbar() {
 
   useEffect(() => {
     // Vérifier si l'utilisateur est connecté
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     setIsLoggedIn(!!token);
   }, [location]);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
     setIsLoggedIn(false);
     navigate('/login');
   };

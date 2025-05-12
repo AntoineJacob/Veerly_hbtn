@@ -38,7 +38,7 @@ function GroupCourses() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     if (!token) {
       alert('Vous devez être connecté pour accéder à cette page');
       navigate('/login');
@@ -52,7 +52,7 @@ function GroupCourses() {
 
   const fetchGroupInfo = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       const response = await axios.get(`/api/groups/get-group/${groupId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -74,7 +74,7 @@ function GroupCourses() {
 
   const fetchGroupCourses = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       const response = await axios.get(`/api/courses/group/${groupId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -95,7 +95,7 @@ function GroupCourses() {
 
   const fetchGroupCoursesByStatus = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       const response = await axios.get(`/api/courses/group/${groupId}/by-status`, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -113,7 +113,7 @@ function GroupCourses() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       await axios.post(`/api/courses/group/${groupId}`, formData, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -152,7 +152,7 @@ function GroupCourses() {
     }
     
     try {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       await axios.delete(`/api/courses/group/${groupId}/${courseId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -172,7 +172,7 @@ function GroupCourses() {
 
   const handleAssignCourse = async (courseId) => {
     try {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       await axios.post(`/api/courses/${courseId}/assign`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -186,7 +186,7 @@ function GroupCourses() {
 
   const handleUnassignCourse = async (courseId) => {
     try {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       await axios.post(`/api/courses/${courseId}/unassign`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -200,7 +200,7 @@ function GroupCourses() {
 
   const handleStartCourse = async (courseId) => {
     try {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       await axios.post(`/api/courses/${courseId}/start`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -214,7 +214,7 @@ function GroupCourses() {
 
   const handleCompleteCourse = async (courseId) => {
     try {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       await axios.post(`/api/courses/${courseId}/complete`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -229,7 +229,7 @@ function GroupCourses() {
   const handleViewReceipt = async (courseId) => {
     try {
       setReceiptLoading(true);
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       const response = await axios.get(`/api/courses/${courseId}/receipt`, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -248,7 +248,7 @@ function GroupCourses() {
     if (!updatedReceipt) return;
     
     try {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       await axios.post(`/api/courses/${updatedReceipt.id}/send-receipt`, {
         price: updatedReceipt.price
       }, {
